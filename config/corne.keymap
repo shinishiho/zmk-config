@@ -1,0 +1,87 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define DEFAULT 0
+#define HRM     1
+#define LOWER   2
+#define RAISE   3
+#define AS(keycode) &as LS(keycode) keycode
+
+&mt {
+    flavor = "tap-preferred";
+}; 
+
+/ {
+    chosen {
+      zmk,matrix_transform = &five_column_transform;
+    };
+
+    behaviors {
+        as: auto_shift {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping_term_ms = <200>;
+            quick_tap_ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+    td_mt: tap_dance_mod_tap {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&lt RAISE ESC>, <&tog HRM>;
+        };
+    };
+        keymap {
+                compatible = "zmk,keymap";
+
+                default_layer {
+                        display-name = "Base";
+                        bindings = <
+   &kp Q    &kp W    &kp F    &kp P     &kp B     &kp J &kp L     &kp U     &kp Y     AS(SEMI)
+   &kp A   &kp R    &kp S    &kp T     &kp G     &kp M &kp N     &kp E     &kp I     &kp O
+   &kp Z    &kp X    &kp C    &kp D     &kp V     &kp K &kp H     AS(COMMA) AS(DOT)   AS(FSLH)
+                &lt LOWER TAB &kp DEL &kp RET     &kp SPACE &kp BSPC &td_mt
+                        >;
+                };
+
+                hrm_layer {
+                        display-name = "Hrm";
+                        bindings = <
+   &trans     &trans     &trans       &trans      &trans    &trans  &trans    &trans       &trans     &trans
+   &mt LGUI A &mt LALT R &mt LSHIFT S &mt LCTRL T &kp G     &kp M &mt RCTRL N &mt RSHIFT E &mt RALT I &mt RGUI O
+   &trans     &trans     &trans       &trans      &trans    &trans  &trans    &trans       &trans     &trans
+                    &trans   &trans   &trans      &trans    &trans    &trans
+                        >;
+                };
+
+                lower_layer {
+                        display-name = "Lower";
+                        bindings = <
+   &trans       &trans       &trans       &trans       &out OUT_USB    &out OUT_BLE &trans      &trans  &trans  &trans
+   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &bt BT_CLR
+   &trans       &trans       &trans       &sys_reset   &bootloader     &bootloader  &sys_reset  &trans  &trans  &trans 
+                                          &trans   &trans   &trans     &trans   &trans    &trans
+                        >;
+                };
+
+                raise_layer {
+                        display-name = "Raise";
+                        bindings = <
+   AS(N1) AS(N2)    AS(N3)    AS(N4)   AS(N5)   AS(N6)   AS(N7)   AS(N8)  AS(N9)   AS(N0)
+   &kp TILDE AS(MINUS) AS(EQUAL) &kp LBRC &kp LBKT &kp RBKT &kp RBRC AS(SQT) AS(BSLH) &kp GRAVE
+   &kp F1 &kp F2    &kp F3    &kp F4   &kp F5   &kp F6   &kp F7   &kp F8  &kp F9   &kp F10
+                    &trans   &trans   &kp F11   &kp F12   &trans   &trans
+                        >;
+                };
+        };
+};
