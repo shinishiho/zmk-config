@@ -34,14 +34,14 @@
             bindings = <&kp>, <&kp>;
         };
 
-    ltd: tap_dance_mod_tap {
+    ltd: left_tap_dance {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&lt LOWER TAB>, <&kp E &kp R &kp F &kp V &kp O &kp L>;
         };
 
-    rtd: tap_dance_mod_tap {
+    rtd: right_tap_dance {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
