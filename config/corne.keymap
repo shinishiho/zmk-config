@@ -38,7 +38,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&lt LOWER TAB>, <&kp E &kp R &kp F &kp V &kp O &kp L>;
+            bindings = <&lt LOWER TAB>, <&kp E>;
         };
 
     rtd: right_tap_dance {
