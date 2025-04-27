@@ -1,0 +1,114 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define DEFAULT 0
+#define HRM     1
+#define LOWER   2
+#define RAISE   3
+#define STENO   4
+#define AS(keycode) &as LS(keycode) keycode
+
+&mt {
+    flavor = "tap-preferred";
+}; 
+
+/ {
+    macros {
+        plover: plover_toggle {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp E &kp R &kp F &kp V &kp O &kp L>
+                , <&macro_tap &tog STENO>
+                , <&macro_release &kp E &kp R &kp F &kp V &kp O &kp L>
+                ;
+        };
+    };
+
+    behaviors {
+        as: auto_shift {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+
+    ltd: left_tap_dance {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&lt LOWER TAB>, <&plover>;
+        };
+
+    rtd: right_tap_dance {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&lt RAISE ESC>, <&tog HRM>;
+        };
+    };
+
+        keymap {
+                compatible = "zmk,keymap";
+
+                default_layer {
+                        display-name = "Base";
+                        bindings = <
+     &kp Q    &kp W    &kp E    &kp R    &kp T     &kp Y    &kp U    &kp I    &kp O    &kp P 
+     &kp A    &kp S    &kp D    &kp F    &kp G     &kp H    &kp J    &kp K    &kp L   AS(SEMI)
+     &kp Z    &kp X    &kp C    &kp V    &kp B     &kp N    &kp M  AS(COMMA) AS(DOT)  AS(FSLH)
+                         &ltd &kp DEL &kp RET      &kp SPACE &kp BSPC &rtd
+                        >;
+                };
+
+                hrm_layer {
+                        display-name = "Hrm";
+                        bindings = <
+     &trans        &trans         &trans          &trans      &trans    &trans      &trans         &trans         &trans      &trans
+   &mt LGUI A    &mt LALT S    &mt LSHIFT D    &mt LCTRL F    &kp G     &kp H    &mt RCTRL J    &mt RSHIFT K    &mt RALT L   AS(SEMI)
+     &trans        &trans         &trans          &trans      &trans    &trans      &trans         &trans         &trans      &trans
+                                &trans   &trans   &trans                &trans    &trans    &trans
+                        >;
+                };
+
+                lower_layer {
+                        display-name = "Lower";
+                        bindings = <
+   &trans       &trans       &trans       &trans       &out OUT_USB    &out OUT_BLE &trans      &trans  &trans  &trans
+   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4    &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &bt BT_CLR
+   &trans       &trans       &trans       &sys_reset   &bootloader     &bootloader  &sys_reset  &trans  &trans  &trans 
+                                          &trans   &trans   &trans     &trans   &trans    &trans
+                        >;
+                };
+
+                raise_layer {
+                        display-name = "Raise";
+                        bindings = <
+   AS(N1) AS(N2)    AS(N3)    AS(N4)   AS(N5)   AS(N6)   AS(N7)   AS(N8)  AS(N9)   AS(N0)
+   &kp TILDE AS(MINUS) AS(EQUAL) &kp LBRC &kp LBKT &kp RBKT &kp RBRC AS(SQT) AS(BSLH) &kp GRAVE
+   &kp F1 &kp F2    &kp F3    &kp F4   &kp F5   &kp F6   &kp F7   &kp F8  &kp F9   &kp F10
+                    &trans   &trans   &kp F11   &kp F12   &trans   &trans
+                        >;
+                };
+
+                steno_layer {
+                        display-name = "Steno";
+                        bindings = <
+     &kp Q    &kp W    &kp E    &kp R    &kp T     &kp U    &kp I    &kp O    &kp P   &kp LBKT
+     &kp A    &kp S    &kp D    &kp F    &kp G     &kp J    &kp K    &kp L   &kp SEMI  &kp SQT
+     &none    &none    &none    &none    &none     &none    &none    &none    &none     &none
+                           &plover &kp C &kp V     &kp N &kp M &none
+                        >;
+                };
+        };
+};
