@@ -163,7 +163,7 @@
         extended_layer {
             display-name = "Extended";
             bindings = <
-&kp GRAVE    &kp N1      &kp N2    &kp N3    &kp N4      &kp N5        &kp N6        &kp N7      &kp N9   &kp N9     &kp N0      &kp MINUS
+&kp GRAVE    &kp N1      &kp N2    &kp N3    &kp N4      &kp N5        &kp N6        &kp N7      &kp N8   &kp N9     &kp N0      &kp MINUS
 &trans       &kp LSHIFT  &kp LALT  &kp LGUI  &kp LCTRL   &none         &kp LEFT      &kp DOWN    &kp UP   &kp RIGHT  &none       &none
 &bootloader  &sys_reset  &tog 7    &colemak  &bt BT_PRV  &bt BT_NXT    &out OUT_TOG  &bt BT_CLR  &qwerty  &plover    &sys_reset  &bootloader
                                    &trans    &trans      &trans        &trans        &trans      &trans
