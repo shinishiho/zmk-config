@@ -75,7 +75,7 @@
                 <&macro_press>,
                 <&kp E &kp R &kp F &kp V &kp O &kp L>,
                 <&macro_tap>,
-                <&tog STENO>,
+                <&tog 4>,
                 <&macro_release>,
                 <&kp E &kp R &kp F &kp V &kp O &kp L>;
         };
@@ -83,27 +83,22 @@
         qwerty: qwerty_select {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&tog_off COLEMAK_DH &tog_off STENO>;
+            bindings = <&tog_off 2 &tog_off 4>;
         };
 
         colemak: colemak_dh_select {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&tog_off STENO &tog_on COLEMAK_DH>;
+            bindings = <&tog_off 4 &tog_on 2>;
         };
     };
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
 
-        enable_hrm_qwerty {
-            if-layers = <QWERTY HRM_ENABLED>;
-            then-layer = <QWERTY_HRM>;
-        };
-
         enable_hrm_colemak_dh {
-            if-layers = <COLEMAK_DH HRM_ENABLED>;
-            then-layer = <COLEMAK_HRM>;
+            if-layers = <1 2>;
+            then-layer = <3>;
         };
     };
 
@@ -113,15 +108,15 @@
         default_layer {
             display-name = "QWERTY";
             bindings = <
-&kp TAB        &kp Q  &kp W  &kp E         &kp R    &kp T      &kp Y      &kp U     &kp I         &kp O    &kp P     &kp LBKT
-&mt LCTRL ESC  &kp A  &kp S  &kp D         &kp F    &kp G      &kp H      &kp J     &kp K         &kp L    &kp SEMI  &kp SQT
-&kp LSHIFT     &kp Z  &kp X  &kp C         &kp V    &kp B      &kp N      &kp M     &kp COMMA     &kp DOT  &kp FSLH  &kp RBKT
-                             &mo EXTENDED  &kp DEL  &kp RET    &kp SPACE  &kp BSPC  &mo FUNCTION
+&kp TAB        &kp Q  &kp W  &kp E  &kp R    &kp T      &kp Y      &kp U     &kp I      &kp O    &kp P     &kp LBKT
+&mt LCTRL ESC  &kp A  &kp S  &kp D  &kp F    &kp G      &kp H      &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LSHIFT     &kp Z  &kp X  &kp C  &kp V    &kp B      &kp N      &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp RBKT
+                             &mo 5  &kp DEL  &kp RET    &kp SPACE  &kp BSPC  &mo 6
             >;
         };
 
         qwerty_hrm {
-            display-name = "HRM";
+            display-name = "QHRM";
             bindings = <
 &trans  &trans         &trans       &trans       &trans        &trans    &trans  &trans        &trans       &trans       &trans            &trans
 &trans  &hml LSHIFT A  &hml LALT S  &hml LGUI D  &hml LCTRL F  &trans    &trans  &hmr RCTRL J  &hmr RGUI K  &hmr RALT L  &hmr RSHIFT SEMI  &trans
@@ -131,7 +126,7 @@
         };
 
         colemak_dh {
-            display-name = "Colemak-DH";
+            display-name = "CLMK";
             bindings = <
 &trans  &kp Q  &kp W  &kp F   &kp P   &kp B     &kp J   &kp L   &kp U      &kp Y    &kp LBKT  &kp RBKT
 &trans  &kp A  &kp R  &kp S   &kp T   &kp G     &kp M   &kp N   &kp E      &kp I    &kp O     &kp APOS
@@ -141,7 +136,7 @@
         };
 
         colemak_dh_hrm {
-            display-name = "HRM";
+            display-name = "CHRM";
             bindings = <
 &trans  &trans         &trans       &trans       &trans        &trans    &trans  &trans        &trans       &trans       &trans         &trans
 &trans  &hml LSHIFT A  &hml LALT R  &hml LGUI S  &hml LCTRL T  &trans    &trans  &hmr RCTRL N  &hmr RGUI E  &hmr RALT I  &hmr RSHIFT O  &trans
@@ -151,42 +146,32 @@
         };
 
         steno_layer {
-            display-name = "Steno";
+            display-name = "STNO";
             bindings = <
-&none  &kp N0  &kp W  &kp E         &kp R  &kp T    &kp Y  &kp U  &kp I         &kp O  &kp P     &kp LBKT
-&none  &kp A   &kp S  &kp D         &kp F  &kp G    &kp H  &kp J  &kp K         &kp L  &kp SEMI  &kp SQT
-&none  &none   &none  &none         &none  &none    &none  &none  &none         &none  &none     &none
-                      &mo EXTENDED  &kp C  &kp V    &kp N  &kp M  &mo FUNCTION
+&none  &kp N0  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I  &kp O  &kp P     &kp LBKT
+&none  &kp A   &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K  &kp L  &kp SEMI  &kp SQT
+&none  &none   &none  &none  &none  &none    &none  &none  &none  &none  &none     &none
+                      &mo 5  &kp C  &kp V    &kp N  &kp M  &mo 6
             >;
         };
 
         extended_layer {
-            display-name = "Extended";
+            display-name = "EXT";
             bindings = <
 &kp GRAVE    &kp N1      &kp N2    &kp N3    &kp N4      &kp N5        &kp N6        &kp N7      &kp N8   &kp N9     &kp N0      &kp MINUS
 &trans       &kp LSHIFT  &kp LALT  &kp LGUI  &kp LCTRL   &none         &kp LEFT      &kp DOWN    &kp UP   &kp RIGHT  &none       &none
-&bootloader  &sys_reset  &tog 7    &colemak  &bt BT_PRV  &bt BT_NXT    &out OUT_TOG  &bt BT_CLR  &qwerty  &plover    &sys_reset  &bootloader
+&bootloader  &sys_reset  &tog 1    &colemak  &bt BT_PRV  &bt BT_NXT    &out OUT_TOG  &bt BT_CLR  &qwerty  &plover    &sys_reset  &bootloader
                                    &trans    &trans      &trans        &trans        &trans      &trans
             >;
         };
 
         function_layer {
-            display-name = "Function";
+            display-name = "FUNC";
             bindings = <
 &kp F1  &kp F2      &kp F3    &kp F4    &kp F5      &kp F6          &kp F7        &kp F8     &kp F9     &kp F10    &kp F11  &kp F12
 &none   &sk LSHIFT  &sk LALT  &sk LGUI  &sk LCTRL   &kp C_VOL_UP    &kp C_BRI_UP  &kp HOME   &kp PG_DN  &kp PG_UP  &kp END  &none
 &none   &none       &none     &none     &kp C_MUTE  &kp C_VOL_DN    &kp C_BRI_DN  &kp PSCRN  &none      &none      &none    &none
                               &trans    &trans      &trans          &trans        &trans     &trans
-            >;
-        };
-
-        hrm_layer {
-            display-name = "HRM";
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans    &trans  &trans  &trans
             >;
         };
     };
