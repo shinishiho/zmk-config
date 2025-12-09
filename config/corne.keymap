@@ -65,6 +65,13 @@
             display-name = "Toggle Layer Off";
             toggle-mode = "off";
         };
+
+        td_mt: td_mt {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_MT";
+            #binding-cells = <0>;
+            bindings = <&mt LCTRL ESC>, <&kp CAPS>;
+        };
     };
 
     macros {
@@ -108,10 +115,10 @@
         default_layer {
             display-name = "QWERTY";
             bindings = <
-&kp TAB        &kp Q  &kp W  &kp E  &kp R    &kp T      &kp Y      &kp U     &kp I      &kp O    &kp P     &kp LBKT
-&mt LCTRL ESC  &kp A  &kp S  &kp D  &kp F    &kp G      &kp H      &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LSHIFT     &kp Z  &kp X  &kp C  &kp V    &kp B      &kp N      &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp RBKT
-                             &mo 5  &kp DEL  &kp RET    &kp SPACE  &kp BSPC  &mo 6
+&kp TAB     &kp Q  &kp W  &kp E  &kp R    &kp T      &kp Y      &kp U     &kp I      &kp O    &kp P     &kp LBKT
+&td_mt      &kp A  &kp S  &kp D  &kp F    &kp G      &kp H      &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
+&kp LSHIFT  &kp Z  &kp X  &kp C  &kp V    &kp B      &kp N      &kp M     &kp COMMA  &kp DOT  &kp FSLH  &kp RBKT
+                          &mo 5  &kp DEL  &kp RET    &kp SPACE  &kp BSPC  &mo 6
             >;
         };
 
